@@ -260,10 +260,13 @@ For example, if five gym objects have a value of `true` on their `completed` pro
 Solve Exercise 13 here:
 */
 
-console.log('===== Ex. 13 =====', '"Gym status" [INCOMPLETE]');
+console.log('===== Ex. 13 =====', '"Gym status"');
 
 game.gymStatus = () => {
-  return game.gyms.filter( g => g.completed ).length;
+  return {
+    complete: game.gyms.filter( g => g.completed ).length,
+    incomplete: game.gyms.filter( g => g.completed === false ).length
+  };
 };
 
 console.log( game.gymStatus() );
