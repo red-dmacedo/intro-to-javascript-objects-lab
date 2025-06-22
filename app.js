@@ -34,18 +34,25 @@ function getPokemon(name){
     return pokemon.find(mon => mon.name.toUpperCase() === name.toUpperCase() )
 };
 
-game.getItem = (name) => {
+const getItem = (name) => {
   if(!name){return};
   return game.items.find( i => i.name.toLowerCase() === name.toLowerCase() );
 };
 
+const completeGymsBelow = (difficulty) => {
+  game.gyms.forEach((i) => {
+      if(i.difficulty < difficulty){ i.completed = true; };
+  });
+};
+
 // Ex 1:
-console.log('Ex. 1) All Pokemon:');
+console.log('===== Ex. 1 =====', '"Examine all Pokemon"');
 console.dir(pokemon, { maxArrayLength: null })
 
 
 // Ex 2:
-console.log('Ex. 2) Game:', game);
+console.log('===== Ex. 2 =====', '"Examine the game object"');
+console.dir(game);
 
 /*
 Exercise 3
@@ -56,8 +63,9 @@ Exercise 3
 Solve Exercise 3 here:
 */
 
+console.log('===== Ex. 3 =====', '"Set the difficulty level of the game"');
 game.difficulty = 'Easy';
-console.log('Ex. 3) Difficulty:', game.difficulty)
+console.log(game.difficulty);
 
 
 
@@ -70,9 +78,10 @@ Exercise 4
 Solve Exercise 4 here:
 */
 
+console.log('===== Ex. 4 =====', '"Add a starter to your party"');
 const starterMon = getPokemon('charmander');
 game.party.push(starterMon);
-console.log('Ex. 4) Party:', game.party);
+console.dir(game.party);
 
 
 
@@ -85,13 +94,12 @@ Exercise 5
 Solve Exercise 5 here:
 */
 
+console.log('===== Ex. 5 =====', '"Add 3 Mons to the party"');
 
 newParty = getPokemonMultiple('Snorlax', 'chansey', 'omastar')
 for(let i of newParty){ game.party.push(i) };
 
-console.log('Ex. 5) Party:', game.party);
-
-
+console.dir( game.party );
 
 
 /*
@@ -103,11 +111,13 @@ Exercise 6
 Solve Exercise 6 here:
 */
 
-game.gyms.forEach((i) => {
-    if(i.difficulty < 3){ i.completed = true; };
-});
+console.log('===== Ex. 6 =====', '"Update gyms below difficulty level 3 to completed"');
+completeGymsBelow(3);
+// game.gyms.forEach((i) => {
+//     if(i.difficulty < 3){ i.completed = true; };
+// });
 
-console.log('Ex. 6)', 'gyms:', game.gyms)
+console.dir( game.gyms );
 
 /*
 Exercise 7
@@ -126,10 +136,12 @@ More Hints: The existing starter Pokemon will be *replaced* in your party with t
 Solve Exercise 7 here:
 */
 
+console.log('===== Ex. 7 =====', '"Evolve your starter Mon"');
+
 let evolvedMon = getPokemon('Charmeleon');
 let Idx = game.party.findIndex(mon => mon.name.toUpperCase() === 'charmander'.toUpperCase())
 game.party[Idx] = evolvedMon;
-console.log('Ex. 7) Party:', game.party);
+console.dir(game.party);
 
 
 /*
@@ -140,7 +152,9 @@ Exercise 8
 Solve Exercise 8 here:
 */
 
-for ( let i of game.party) { console.log('Ex. 8) Party Names:', i.name) };
+console.log('===== Ex. 8 =====', '"Party Names"');
+
+for ( let i of game.party) { console.log( i.name ) };
 
 
 /*
@@ -152,8 +166,10 @@ Exercise 9
 Solve Exercise 9 here:
 */
 
+console.log('===== Ex. 9 =====', '"List all starter Mons"');
+
 starterPokemon = pokemon.filter( mon => mon.starter );
-console.log('Ex. 9) Starters:', starterPokemon);
+console.dir( starterPokemon );
 
 /*
 Exercise 10
@@ -167,11 +183,13 @@ After writing this method, call it and pass in a Pokemon object of your choice f
 Solve Exercise 10 here:
 */
 
+console.log('===== Ex. 10 =====', '"Catch Bulbasaur"');
+
 game.catchPokemon = (pokemonObj) => { game.party.push(pokemonObj); };
 
 game.catchPokemon( getPokemon('bulbasaur') );
 
-console.log('Ex. 10) Party:', game.party);
+console.dir( game.party );
 
 /*
 Exercise 11
@@ -186,16 +204,18 @@ Also, log the `game.items` array to confirm that the pokeball quantity is being 
 Solve Exercise 11 here:
 */
 
-console.log('Ex. 11) Pokeball Qty:', game.getItem('pokeball').quantity);
+console.log('===== Ex. 11 =====', '"Catch Alakazam and decrement pokeballs"');
+
+console.log('Initial pokeballs:', getItem('pokeball').quantity);
 
 game.catchPokemon = (pokemonObj) => {
   game.party.push(pokemonObj);
-  game.getItem('pokeball').quantity--;
+  getItem('pokeball').quantity--;
 };
 
 game.catchPokemon(getPokemon('alakazam'));
 
-console.log('Ex. 11) Pokeball Qty:', game.getItem('pokeball').quantity);
+console.log('Ending pokeballs:', getItem('pokeball').quantity);
 
 
 /*
@@ -206,12 +226,14 @@ Exercise 12
 Solve Exercise 12 here:
 */
 
+console.log('===== Ex. 12 =====', '"Update gyms below difficulty level 6 to completed"');
 
-game.gyms.forEach((i) => {
-    if(i.difficulty < 6){ i.completed = true; };
-});
+completeGymsBelow(6)
+// game.gyms.forEach((i) => {
+//     if(i.difficulty < 6){ i.completed = true; };
+// });
 
-console.log('Ex. 12)', 'gyms:', game.gyms);
+console.dir( game.gyms );
 
 
 
@@ -238,9 +260,13 @@ For example, if five gym objects have a value of `true` on their `completed` pro
 Solve Exercise 13 here:
 */
 
-game.gymStatus = () => { return game.gyms.filter( g => g.completed ).length; };
+console.log('===== Ex. 13 =====', '"Gym status" [INCOMPLETE]');
 
-console.log('Ex. 13) Completed gyms:', game.gymStatus());
+game.gymStatus = () => {
+  return game.gyms.filter( g => g.completed ).length;
+};
+
+console.log( game.gymStatus() );
 
 /*
 Exercise 14
@@ -254,9 +280,11 @@ This method should:
 Solve Exercise 14 here:
 */
 
+console.log('===== Ex. 14 =====', '"Total pokemon in party"');
+
 game.partyCount = () => { return game.party.length; };
 
-console.log('Ex. 14)', game.partyCount());
+console.log( game.partyCount() );
 
 /*
 Exercise 15
@@ -266,11 +294,14 @@ Exercise 15
 Solve Exercise 15 here:
 */
 
-game.gyms.forEach((i) => {
-    if(i.difficulty < 8){ i.completed = true; };
-});
+console.log('===== Ex. 15 =====', '"Complete all gyms below difficulty 8"');
 
-console.log('Ex. 15)', 'gyms:', game.gyms);
+completeGymsBelow(8);
+// game.gyms.forEach((i) => {
+//     if(i.difficulty < 8){ i.completed = true; };
+// });
+
+console.dir( game.gyms );
 
 
 /*
@@ -281,7 +312,9 @@ Exercise 16
 Solve Exercise 16 here:
 */
 
-console.log('Ex. 16) Game:', game)
+console.log('===== Ex. 16 =====', '"Re-Examine the game object"');
+
+console.dir( game );
 
 /*
 Exercise 17
@@ -292,9 +325,11 @@ Exercise 17
 Solve Exercise 17 here:
 */
 
-game.party.sort((a,b) => a.hp - b.hp);
+console.log('===== Ex. 17 =====', '"Sort pokemon by HP values"');
 
-console.log('Ex. 17) Party:', game.party);
+game.party.sort( (a,b) => a.hp - b.hp );
+
+console.dir( game.party );
 
 /*
 Exercise 18
@@ -315,21 +350,24 @@ Also, log the `game.items` array to confirm that the pokeball quantity is being 
 Solve Exercise 18 here:
 */
 
-console.log('Ex. 18) Items:', game.items);
+console.log('===== Ex. 18 =====', '"Account for excess pokemon and decrement pokeballs"');
+
+console.log('Initial Pokeballs:', getItem('pokeball').quantity ); // console.dir( game.items );
+
 game.collection = [];
-
 game.catchPokemon = (pokemonObj) => {
-
   if ( game.party.length < 6 ) { game.party.push(pokemonObj); }
   else { game.collection.push(pokemonObj); };
 
-  game.getItem('pokeball').quantity--;
+  getItem('pokeball').quantity--;
 };
 
-console.log('Ex. 18) Party:', game.party);
+console.log('Party (Before Catching Scyther):'); console.dir(game.party);
+
 game.catchPokemon(getPokemon('Scyther'));
-console.log('Ex. 18) Excess Pokemon:', game.collection);
-console.log('Ex. 18) Items:', game.items);
+
+console.log('Excess Pokemon:'); console.dir(game.collection);
+console.log('Ending Pokeballs:', getItem('pokeball').quantity);
 
 
 /*
@@ -343,18 +381,27 @@ Also, ensure that the Pokemon isn't added to the `game.party` or the `game.colle
 Solve Exercise 19 here:
 */
 
+console.log('===== Ex. 19 =====', '"Display message when you are out of pokeballs"');
+
 game.catchPokemon = (pokemonObj) => {
 
-  if ( game.getItem('pokeball').quantity <=0 ) {
-    game.getItem('pokeball').quantity = 0; // This will account for negative numbers
+  if ( getItem('pokeball').quantity <= 0 ) {
+    getItem('pokeball').quantity = 0; // This will account for negative numbers
     console.log(`You are out of pokeballs! Failed to capture ${pokemonObj.name}`);
     return;
   };
   if ( game.party.length < 6 ) { game.party.push(pokemonObj); }
   else { game.collection.push(pokemonObj); };
 
-  game.getItem('pokeball').quantity--;
+  getItem('pokeball').quantity--;
 };
+
+let curPokeballs = getItem('pokeball').quantity;
+
+getItem('pokeball').quantity = 0;
+game.catchPokemon(getPokemon('Mewtwo'));
+
+getItem('pokeball').quantity = curPokeballs;
 
 /*
 Exercise 20
@@ -367,20 +414,28 @@ If there is not a match, then return a string noting that the selected Pokemon d
 Solve Exercise 20 here:
 */
 
+console.log('===== Ex. 20 =====', '"Allow catching pokemon by NAME, and do NOT continue if name is not found"');
+
 game.catchPokemon = (pokemonName) => {
   let pokemonObj = getPokemon(pokemonName);
 
-  if ( game.getItem('pokeball').quantity <=0 ) {
-    game.getItem('pokeball').quantity = 0; // This will account for negative numbers
+  if ( pokemonObj === undefined ) {
+    console.log(`Pokemon not found: ${pokemonName}`);
+    return;
+  };
+
+  if ( getItem('pokeball').quantity <=0 ) {
+    getItem('pokeball').quantity = 0; // This will account for negative numbers
     console.log(`You are out of pokeballs! Failed to capture ${pokemonObj.name}`);
     return;
   };
   if ( game.party.length < 6 ) { game.party.push(pokemonObj); }
   else { game.collection.push(pokemonObj); };
 
-  game.getItem('pokeball').quantity--;
+  getItem('pokeball').quantity--;
 };
 
+game.catchPokemon('ewtwo')
 
 /*
 Exercise 21
@@ -408,6 +463,8 @@ Log the object when it's constructed.
 Solve Exercise 21 here:
 */
 
+console.log('===== Ex. 21 =====', '"Sort pokemon into separate arrays by type"');
+
 const typesArr = pokemon.map(i => i.type); // extract types as array
 const uniqueTypes = [...new Set(typesArr)]; // extract unique types from previous array
 
@@ -418,7 +475,7 @@ uniqueTypes.forEach((i) => {
   entireArray.push(tempObj);
 });
 
-console.log('Ex. 21) Set:', entireArray);
+console.dir( entireArray );
 
 
 // [p.type]
