@@ -471,7 +471,7 @@ console.log('===== Ex. 21 =====', '"Sort pokemon into separate arrays by type"')
 const typesArr = pokemon.map(i => i.type); // extract types as array
 const uniqueTypes = [...new Set(typesArr)]; // extract unique types from previous array
 
-const entireArray = [];
+const entireArray = {};
 uniqueTypes.forEach((i) => {
   tempObj = {};
   tempObj[i] = pokemon.filter( j => j.type === i )
@@ -483,3 +483,13 @@ console.dir( entireArray );
 
 // [p.type]
 // pokemon[0].name = pokemon[0]['name']
+
+console.log('===== Ex. 21 ===== (2nd)', '"Sort pokemon into separate arrays by type"');
+
+const pkmnByType = {};
+pokemon.forEach((i) => {
+  pkmnByType[i.type] || pkmnByType[i.type] = []
+  pkmnByType[i.type].push(i);
+});
+
+console.dir(pkmnByType);
